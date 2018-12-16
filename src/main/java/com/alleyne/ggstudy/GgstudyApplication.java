@@ -8,5 +8,6 @@ public class GgstudyApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(GgstudyApplication.class, args);
+        //SpringApplication.run(UserController.class, args);
     }
 }

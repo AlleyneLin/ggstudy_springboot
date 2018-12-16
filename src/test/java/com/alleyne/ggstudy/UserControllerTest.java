@@ -1,25 +1,26 @@
 package com.alleyne.ggstudy;
 
+import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockServletContext;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import static org.hamcrest.core.IsEqual.equalTo;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest(classes = MockServletContext.class)
+@SpringApplicationConfiguration(classes = MockServletContext.class)
 @WebAppConfiguration
 public class UserControllerTest {
     //模拟http发送请求的测试类
@@ -27,18 +28,20 @@ public class UserControllerTest {
 
     @Before
     public void setUp() throws Exception{
-        mvc = MockMvcBuilders.standaloneSetup(new UserControllerTest()).build();
+        mvc = MockMvcBuilders.standaloneSetup(new UserController()).build();
     }
     @Test
     public void TestUserController() throws Exception{
         RequestBuilder requestBuider = null;
+
+
         // 1、get查一下user列表，应该为空
-        requestBuider = get("/");
-        //mvc.perform(requestBuider).andExpect(status().isOk()).andExpect(content().string(equalTo("[]")));
-        mvc.perform(requestBuider).andExpect(status().isOk());
+        requestBuider = get("/users/");
+        mvc.perform(requestBuider).andExpect(status().isOk()).andExpect(content().string(equalTo("[]")));
+        //mvc.perform(requestBuider).andExpect(status().isOk());
 
         // 2、post提交一个user
-        requestBuider = put("/users/").param("id", "1")
+        requestBuider = post("/users/").param("id", "1")
                                                     .param("name", "测试人")
                                                     .param("age", "17");
         mvc.perform(requestBuider).andExpect(content().string(equalTo("success")));
@@ -67,4 +70,5 @@ public class UserControllerTest {
                 .andExpect(content().string(equalTo("[]")));
 
     }
+
 }
