@@ -1,6 +1,7 @@
-package com.alleyne.ggstudy;
+package com.alleyne.ggstudy.web;
 
 
+import com.alleyne.ggstudy.domain.User;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;

@@ -1,4 +1,4 @@
-package com.alleyne.ggstudy;
+package com.alleyne.ggstudy.domain;
 
 public class User {
     private Long id;
